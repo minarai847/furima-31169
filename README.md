@@ -21,22 +21,21 @@
 
 ## item テーブル
 
-| Column         | Type       |  Options    |
-| ------         | ------     | ----------- |
-| name           | string     | null: false |
-| description    | text       | null:false  |
-|category        | integer    | null:false  |
-|item_condition  | integer    | null:false  |
-|shipping_charges| integer    | null:false  |
-|shipping_area   | integer    | null:false  |
-|days_to_ship    | integer    | null:false  |
-|price           | integer    |null:false  |
+| Column            | Type    |  Options    |
+| ------            | ------  | ----------- |
+| name              | string  | null: false |
+| description       | text    | null:false  |
+|category_id        | integer |null:false   |
+|item_condition_id  | integer | null:false  |
+|shipping_charges_id| integer | null:false  |
+|shipping_area_id   | integer | null:false  |
+|days_to_ship_id    | integer | null:false  |
+|price              | integer |null:false   |
 
 
 ### Association
 
 - belongs_to :user 
-- has_one    :address
 - has_one    :order
 
 
@@ -64,7 +63,6 @@
 |address_number |string   | null: false     |
 |phone_number   |string   | null:false      |
 |building_name  |string   |                 |
-|user_id        |integer  |foreign_key: true|
 |order_id       |integer  |foreign_key: true|
 
 ### Association
