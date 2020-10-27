@@ -2,16 +2,16 @@
 
 ## users テーブル
 
-| Column     | Type   | Options     |
-| --------   | ------ | ----------- |
-| nickname   | string | null: false |
-| email      | string | null: false |
-| password   | string | null: false |
-|first_name  | string | null: false |
-|last_name   | string | null:false  |
-|F.first_name| string |null:false   |
-|F.last_name | string |null:false   |
-|birthday    | date   | null:false  |
+| Column        | Type   | Options     |
+| --------      | ------ | ----------- |
+| nickname      | string | null: false |
+| email         | string | null: false |
+| password      | string | null: false |
+|first_name     | string | null: false |
+|last_name      | string | null:false  |
+|first_name_kana| string |null:false   |
+|last_name_kana | string |null:false   |
+|birthday       | date   | null:false  |
 
 ### Association
 
@@ -23,14 +23,14 @@
 
 | Column         | Type       |  Options    |
 | ------         | ------     | ----------- |
-| item_name      | string     | null: false |
-|item_description| text       | null:false  |
-|category        | ActiveHash | null:false  |
-|item_condition  | ActiveHash |null:false   |
-|shipping_charges| ActiveHash | null:false |
-|shipping_area   | ActiveHash | null:false  ||days_to_ship    | ActiveHash | null:false  |
-|image           |ActiveStorage|null:false  |
-|price           |string      |null:false   |
+| name           | string     | null: false |
+| description    | text       | null:false  |
+|category        | integer    | null:false  |
+|item_condition  | integer    | null:false  |
+|shipping_charges| integer    | null:false  |
+|shipping_area   | integer    | null:false  |
+|days_to_ship    | integer    | null:false  |
+|price           | integer    |null:false  |
 
 
 ### Association
@@ -44,8 +44,8 @@
 
 | Column   | Type    | Options           |
 | ------   | ------  | -----------       |
-|user_id   |         | foreign_key: true |
-|item_id   |         | foreign_key: true|
+|user_id   |integer  | foreign_key: true |
+|item_id   |integer  | foreign_key: true|
 
 
 ### Association
@@ -60,14 +60,13 @@
 | ------        | ------  | -----------     |
 | post_code     | string  | null: false     |
 |municipalities |string   | null: false     |
+|prefectures    |integer  |null:false       |
 |address_number |string   | null: false     |
 |phone_number   |string   | null:false      |
 |building_name  |string   |                 |
-|user_id        |         |foreign_key: true|
-|order_id       |         |foreign_key: true|
+|user_id        |integer  |foreign_key: true|
+|order_id       |integer  |foreign_key: true|
 
 ### Association
 
-- has_one   : item
-- belongs_to: user
 - belongs_to: order
