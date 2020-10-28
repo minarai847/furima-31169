@@ -10,19 +10,6 @@ describe 'ユーザー新規登録' do
     it "nicknameとemail、passwordとpassword_confirmation、fitst_name,last_name,first_name_kana,last_name_kana,birthdayが存在すれば登録できる" do
       expect(@user).to be_valid
     end
-    it "passwordが6文字以上の半角英数字で登録できる" do
-       @user.password = "a00000"
-       @user.password_confirmation = "a00000"
-       expect(@user).to be_valid
-    end
-    it "first_name_kana全角であれば登録できる" do
-      @user.first_name_kana = "ヤマダ"
-      expect(@user).to be_valid
-    end
-    it "last_name_kana全角であれば登録できる" do
-      @user.last_name_kana ="タロウ"
-      expect(@user).to be_valid
-    end
   end
 
   context '新規登録がうまくいかないとき' do
@@ -36,6 +23,13 @@ describe 'ユーザー新規登録' do
       @user.valid?
       expect(@user.errors.full_messages).to include("Email can't be blank")
     end
+
+    it "emailに＠がなければ登録できない" do
+      @user.email = 'aaa.com'
+      @user.valid?
+      expect(@user.errors.full_messages).to include("Email is invalid")
+    end
+
     it "重複したemailが存在する場合登録できない" do
       @user.save
       another_user = FactoryBot.build(:user)
@@ -48,18 +42,32 @@ describe 'ユーザー新規登録' do
       @user.valid?
       expect(@user.errors.full_messages).to include("Password can't be blank")
     end
+
     it "passwordが5文字以下であれば登録できない" do
     @user.password = "A0000"
     @user.password_confirmation = "A0000"
     @user.valid?
     expect(@user.errors.full_messages).to include("Password is too short (minimum is 6 characters)")
-
     end
+    it "passwordが半角数字のみであれば登録できない" do
+      @user.password = "111111"
+      @user.password_confirmation = "111111"
+      @user.valid?
+      expect(@user.errors.full_messages).to include("Password Include both letters and numbers")
+    end
+    it "passwordが半角英字のみであれば登録できない" do
+      @user.password = "aaaaaa"
+      @user.password_confirmation = "aaaaaa"
+      @user.valid?
+      expect(@user.errors.full_messages).to include("Password Include both letters and numbers")
+    end
+
     it "passwordが存在してもpassword_confirmationが空では登録できない" do
       @user.password_confirmation = ""
       @user.valid?
       expect(@user.errors.full_messages).to include("Password confirmation doesn't match Password")
     end
+
     it "first_nameが半角であれば登録できない" do
       @user.first_name = "yamada"
       @user.valid?
@@ -105,8 +113,6 @@ describe 'ユーザー新規登録' do
       @user.valid?
       expect(@user.errors.full_messages).to include("Birthday can't be blank")
     end
-    
-
   end
 end
 end

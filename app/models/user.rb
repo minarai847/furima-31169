@@ -3,23 +3,25 @@ class User < ApplicationRecord
   # :confirmable, :lockable, :timeoutable, :trackable and :omniauthable
   devise :database_authenticatable, :registerable,
          :recoverable, :rememberable, :validatable
-         validates :nickname, presence: true
-          # EMAIL = /\A[\w+\-.]+@[a-z\d\-.]+\.[a-z]+\z/i
-         validates :email, presence: true
-        #  ,uniqueness: true, format: {with: EMAIL}
+         with_options presence:true do
            
-         validates :password,format: {with:/\A[a-z\d]{6,100}+\z/i, message: 'Include both letters and numbers'}
-         
-         validates :first_name,presence: true,format: {with:/\A[一-龥ぁ-ん]/, message: 'Full-width characters'}
-         
-         validates :last_name, presence: true,format: {with:/\A[一-龥ぁ-ん]/,message: 'Full-width characters'}
-         
-         validates :first_name_kana, presence: true,  format: {with:/\A[ァ-ヶー－]+\z/,message: 'Full-width katakana characters'}
-         
-         validates :last_name_kana, presence: true, format: {with:/\A[ァ-ヶー－]+\z/,message: 'Full-width katakana characters'}
+         validates :nickname
+        
+           EMAIL = /\A[\w+\-.]+@[a-z\d\-.]+\.[a-z]+\z/i
+          validates :email, presence: true  , format: {with: EMAIL}
 
-         validates :birthday      , presence: true
+         validates :password,format: {with:/\A(?=.*?[a-z])(?=.*?\d)[a-z\d]+\z/i, message: 'Include both letters and numbers'}
+         FIRST_NAME = /\A[一-龥ぁ-ん]/
+         validates :first_name,format: {with:FIRST_NAME, message: 'Full-width characters'}
+         
+         validates :last_name,format: {with:FIRST_NAME,message: 'Full-width characters'}
+         NAME_KANA = /\A[ァ-ヶー－]+\z/
+         validates :first_name_kana,format: {with:NAME_KANA,message: 'Full-width katakana characters'}
+         
+         validates :last_name_kana, format: {with:NAME_KANA,message: 'Full-width katakana characters'}
 
+         validates :birthday 
+         end
          has_many :items
          has_many :orders
 end
