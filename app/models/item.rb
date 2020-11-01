@@ -1,9 +1,11 @@
 class Item < ApplicationRecord
   extend ActiveHash::Associations::ActiveRecordExtensions
+with_options presence: true do
+  validates :image
+  validates :name
+  validates :description
+end
 
-  validates :image, presence: true
-  validates :name, presence: true
-  validates :description, presence: true
   with_options numericality: { other_than: 1, message:" Select" } do
   validates :category_id
   validates :item_condition_id

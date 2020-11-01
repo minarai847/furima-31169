@@ -57,12 +57,21 @@ end
       @item.valid?
       expect(@item.errors.full_messages).to include("Price must be less than or equal to 9999999")
       end
-      
-    
+      it "商品名が空だった場合保存されない"do
+      @item.name = nil
+      @item.valid?
+      expect(@item.errors.full_messages).to include("Name can't be blank")
+      end
+      it "商品説明が空だった場合保存されない"do
+      @item.description= nil
+      @item.valid?
+      expect(@item.errors.full_messages).to include("Description can't be blank")
+      end
 
-  end
-   end
     end
+  end
+end
+
 
 
 
