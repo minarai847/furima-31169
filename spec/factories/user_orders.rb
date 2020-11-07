@@ -1,6 +1,6 @@
 FactoryBot.define do
   factory :user_order do
-   
+    token {"4242424242242424"}
     post_code{'000-0000'}
     shipping_area_id{'3'}
     municipalities{"横浜"}

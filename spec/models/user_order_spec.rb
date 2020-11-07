@@ -14,9 +14,22 @@ describe '商品の購入' do
      @user_order = 000-0000
      expect(@user_orders).to be_valid
     end
+
+    it"tokenが半角英数字であれば保存される" do
+      @user_order = 00000000000000000
+     expect(@user_orders).to be_valid
+    end
+
   end
 end
 context"商品が購入できない場合"do
+
+it "tokenが空では登録できないこと" do
+  @user_orders.token = nil
+  @user_orders.valid?
+  expect(@user_orders.errors.full_messages).to include("Token can't be blank")
+end
+
 
 it "郵便番号が空では保存されない"do
   @user_orders.post_code = nil
