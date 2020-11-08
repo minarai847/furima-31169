@@ -22,6 +22,7 @@ class ItemsController < ApplicationController
   end
   def show
     @item = Item.find(params[:id])
+    @order = Order.find(params[:id])
   end
 
   def edit
@@ -40,7 +41,7 @@ def destroy
     
       redirect_to root_path
   end
-
+  
 
   def item_params
     params.require(:item).permit(:image,:name,:description,:category_id,:item_condition_id,:shipping_charge_id,:shipping_area_id,:days_to_ship_id,:price).merge(user_id: current_user.id)
