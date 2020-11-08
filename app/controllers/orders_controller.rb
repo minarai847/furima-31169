@@ -1,8 +1,14 @@
 class OrdersController < ApplicationController
+  before_action :authenticate_user!
+  before_action :user_index,only:[:index,:create]
+  before_action :item_index,only:[:index,:create]
   def index
-     @item = Item.find(params[:item_id])
     @user_orders = UserOrder.new
-  end
+     @item = Item.find(params[:item_id])
+      
+     
+    
+end
 def create
  
   @user_orders = UserOrder.new(order_params)
@@ -16,10 +22,7 @@ def create
       render :index
     end
   end
-  def  done
-    @user_order= Item.find(params[:id])
-    @user_order.update( order_id: current_user.id)
-   end
+  
 private
 
 def order_params
@@ -33,6 +36,20 @@ def pay_item
     card: params[:token],    # カードトークン
     currency: 'jpy'                 # 通貨の種類（日本円）
   )    
+end
+def user_index
+  @item = Item.find(params[:item_id])
+  if @item.user_id == current_user.id
+    redirect_to root_path
+  end
+end
+ def item_index
+  @item = Item.find(params[:item_id])
+  @order = Order.find(params[:item_id])
+  if @item.id == @order.item_id
+    redirect_to root_path
+  
+ end 
 end
 end
 
