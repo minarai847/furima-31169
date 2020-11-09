@@ -45,12 +45,11 @@ def user_index
 end
  def item_index
   @item = Item.find(params[:item_id])
-  @order = Order.find(params[:item_id])
-  if @item.id == @order.item_id
-    redirect_to root_path
   
- end 
-end
+unless @item.order ==nil 
+    redirect_to root_path
+ end
+ 
 end
 
-
+end
